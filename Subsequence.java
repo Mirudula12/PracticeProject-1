@@ -1,33 +1,42 @@
 
 public class Subsequence {
 
-		static int lis(int arr[], int n)
-	    {
-	        int lis[] = new int[n];
-	        int i, j, max = 0;
-	 
-	        for (i = 0; i < n; i++)
-	            lis[i] = 1;
-	 
-	        for (i = 1; i < n; i++)
-	            for (j = 0; j < i; j++)
-	                if (arr[i] > arr[j] && lis[i] < lis[j] + 1)
-	                    lis[i] = lis[j] + 1;
-	 
-	       
-	        for (i = 0; i < n; i++)
-	            if (max < lis[i])
-	                max = lis[i];
-	 
-	        return max;
-	    }
-		public static void main(String args[]) {
+	static int max; 
+    static int lis1(int arr[], int n)
+    {
+        
+        if (n == 1)
+            return 1;
+ 
+        int res, max1 = 1;
+ 
+        for (int i = 1; i < n; i++) {
+            res = lis1(arr, i);
+            if (arr[i - 1] < arr[n - 1]
+                && res + 1 > max1)
+                max1 = res + 1;
+        }
+       
+        if (max < max1)
+            max = max1;
+
+        return max1;
+    }
+ 
+   
+    static int lis(int arr[], int n)
+    {
+       
+        max = 1;
+        lis1(arr, n);  
+        return max;
+    }
+    
+	public static void main(String args[]) {
 		
 			int arr[] = {13,1,3,4,8,19,17,8,0,20,14};
 			int n = arr.length;
 			System.out.println("Length of LIS: " + lis(arr, n));
-		}
-	
-	
+	}
 
 }
